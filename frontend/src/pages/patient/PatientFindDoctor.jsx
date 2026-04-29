@@ -105,28 +105,48 @@ export default function PatientFindDoctor() {
   }
 
   return (
-    <div style={{ background: '#f5f5f7', minHeight: '100vh', paddingBottom: 80 }}>
-      <div style={{ background: '#fff', padding: '56px 24px 20px', borderBottom: '1px solid #d2d2d7' }}>
-        <button onClick={() => navigate('/patient')} style={{
-          background: 'none', border: 'none', color: '#0071e3',
-          fontSize: 14, cursor: 'pointer', padding: 0, marginBottom: 16,
-        }}>
-          ← Back
-        </button>
-        <h1 style={{ fontSize: 28, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif', margin: 0 }}>
-          Find a doctor
-        </h1>
-        <p style={{ fontSize: 15, color: '#6e6e73', marginTop: 8 }}>
-          Request a connection to unlock your exercises and feedback.
-        </p>
-      </div>
+    <div style={{ background: '#f5f5f7', minHeight: '100vh', paddingBottom: 88 }}>
 
-      <div style={{ padding: '32px 24px', maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Sticky header */}
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 20,
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e5ea',
+      }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '16px 24px' }}>
+          <button
+            onClick={() => navigate('/patient')}
+            style={{
+              background: 'none', border: 'none', color: '#0071e3',
+              fontSize: 14, cursor: 'pointer', padding: 0, marginBottom: 0,
+            }}
+          >
+            ← Back
+          </button>
+        </div>
+      </header>
+
+      <main style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>
+
+        {/* Page title */}
+        <div style={{ marginBottom: 32 }}>
+          <h1 style={{
+            fontSize: 32, fontWeight: 600, color: '#1d1d1f',
+            fontFamily: '"Inter Tight", sans-serif', margin: 0,
+          }}>
+            Find a doctor
+          </h1>
+          <p style={{ fontSize: 17, color: '#6e6e73', marginTop: 8 }}>
+            Request a connection to unlock your exercises and feedback.
+          </p>
+        </div>
+
         {error && (
           <div style={{
             background: '#ff3b3010', border: '1px solid #ff3b3030',
             borderRadius: 12, padding: '12px 16px',
             fontSize: 13, color: '#ff3b30', lineHeight: 1.5,
+            marginBottom: 16,
           }}>
             {error}
           </div>
@@ -144,50 +164,52 @@ export default function PatientFindDoctor() {
           </div>
         )}
 
-        {doctors.map(doctor => {
-          const status = requests[doctor.id]
-          const isPending = status === 'pending'
-          const isApproved = status === 'approved'
-          const isRejected = status === 'rejected'
-          const label = isApproved ? 'Connected' : isPending ? 'Requested' : isRejected ? 'Rejected' : 'Request'
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {doctors.map(doctor => {
+            const status = requests[doctor.id]
+            const isPending = status === 'pending'
+            const isApproved = status === 'approved'
+            const isRejected = status === 'rejected'
+            const label = isApproved ? 'Connected' : isPending ? 'Requested' : isRejected ? 'Rejected' : 'Request'
 
-          return (
-            <Card key={doctor.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-              <div>
-                <div style={{ fontSize: 17, fontWeight: 600, color: '#1d1d1f' }}>{doctor.name}</div>
-                <div style={{ fontSize: 13, color: '#6e6e73', marginTop: 4 }}>{doctor.specialization || 'Physiotherapist'}</div>
-              </div>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button
-                  onClick={() => handleRequest(doctor.id)}
-                  disabled={isPending || isApproved}
-                  style={{
-                    background: isApproved ? '#34c759' : '#0071e3',
-                    color: '#fff', border: 'none', borderRadius: 10,
-                    padding: '8px 14px', fontSize: 12, fontWeight: 600,
-                    cursor: isPending || isApproved ? 'default' : 'pointer',
-                    opacity: isPending ? 0.6 : 1,
-                  }}
-                >
-                  {label}
-                </button>
-                {(isApproved || isPending) && (
+            return (
+              <Card key={doctor.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 600, color: '#1d1d1f' }}>{doctor.name}</div>
+                  <div style={{ fontSize: 13, color: '#6e6e73', marginTop: 4 }}>{doctor.specialization || 'Physiotherapist'}</div>
+                </div>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
                   <button
-                    onClick={() => handleRemove(doctor.id)}
+                    onClick={() => handleRequest(doctor.id)}
+                    disabled={isPending || isApproved}
                     style={{
-                      background: '#fff', color: '#ff3b30', border: '1px solid #ff3b3030',
-                      borderRadius: 10, padding: '8px 12px', fontSize: 12, fontWeight: 600,
-                      cursor: 'pointer',
+                      background: isApproved ? '#34c759' : '#0071e3',
+                      color: '#fff', border: 'none', borderRadius: 10,
+                      padding: '8px 14px', fontSize: 12, fontWeight: 600,
+                      cursor: isPending || isApproved ? 'default' : 'pointer',
+                      opacity: isPending ? 0.6 : 1,
                     }}
                   >
-                    Remove
+                    {label}
                   </button>
-                )}
-              </div>
-            </Card>
-          )
-        })}
-      </div>
+                  {(isApproved || isPending) && (
+                    <button
+                      onClick={() => handleRemove(doctor.id)}
+                      style={{
+                        background: '#fff', color: '#ff3b30', border: '1px solid #ff3b3030',
+                        borderRadius: 10, padding: '8px 12px', fontSize: 12, fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </Card>
+            )
+          })}
+        </div>
+      </main>
 
       <PatientBottomNav />
     </div>

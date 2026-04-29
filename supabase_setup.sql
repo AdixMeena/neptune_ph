@@ -242,4 +242,4 @@ on conflict do nothing;
 --  3. Create a patient account: email + password, user_metadata: {"role":"patient","name":"Arjun Mehta"}
 --  4. Copy SUPABASE_URL + ANON_KEY into phoenix-ai/.env
 --  5. Copy SUPABASE_URL + SERVICE_ROLE_KEY into phoenix-ai/backend/.env
--- =============================================================================
+-- ========================================

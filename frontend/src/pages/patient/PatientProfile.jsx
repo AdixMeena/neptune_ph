@@ -59,6 +59,15 @@ function InfoRow({ label, value }) {
   )
 }
 
+function MiniStatCard({ label, value }) {
+  return (
+    <div style={{ flex: 1, textAlign: 'center', padding: '16px 8px' }}>
+      <div style={{ fontSize: 24, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif', lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 12, color: '#6e6e73', marginTop: 6 }}>{label}</div>
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function PatientProfile() {
   const navigate = useNavigate()
@@ -227,91 +236,63 @@ export default function PatientProfile() {
   return (
     <div style={{ background: '#f5f5f7', minHeight: '100vh', paddingBottom: 88, fontFamily: '"Inter", sans-serif' }}>
 
-      {/* ── Header ── */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #d2d2d7', padding: '56px 24px 0' }}>
-        {/* Top row */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif' }}>Profile</h1>
+      {/* ── Sticky header ── */}
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 20,
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e5ea',
+      }}>
+        <div style={{
+          maxWidth: 1200, margin: '0 auto',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '16px 24px',
+        }}>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 600, fontFamily: '"Inter Tight", sans-serif', color: '#1d1d1f' }}>
+              My profile
+            </div>
+            <div style={{ fontSize: 12, color: '#6e6e73', marginTop: 2 }}>
+              Your recovery details and account settings
+            </div>
+          </div>
           {!editing
             ? <button onClick={() => setEditing(true)} style={{
-                background: 'none', border: '1px solid #d2d2d7', borderRadius: 980,
+                background: 'none', border: '1px solid #d2d2d7', borderRadius: 10,
                 padding: '6px 16px', fontSize: 13, fontWeight: 600, color: '#1d1d1f',
                 cursor: 'pointer',
               }}>Edit</button>
             : <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={() => setEditing(false)} style={{
-                  background: 'none', border: '1px solid #d2d2d7', borderRadius: 980,
+                  background: 'none', border: '1px solid #d2d2d7', borderRadius: 10,
                   padding: '6px 16px', fontSize: 13, fontWeight: 600, color: '#6e6e73', cursor: 'pointer',
                 }}>Cancel</button>
                 <button onClick={handleSave} style={{
-                  background: '#0071e3', border: 'none', borderRadius: 980,
+                  background: '#0071e3', border: 'none', borderRadius: 10,
                   padding: '6px 16px', fontSize: 13, fontWeight: 600, color: '#fff', cursor: 'pointer',
                 }}>Save</button>
               </div>
           }
         </div>
+      </header>
 
-        {/* Identity row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-          <Avatar name={patientName} size={64} />
-          <div style={{ flex: 1 }}>
-            {editing
-              ? <input value={name} onChange={e => setName(e.target.value)} style={{
-                  fontSize: 19, fontWeight: 600, color: '#1d1d1f',
-                  border: '1px solid #0071e3', borderRadius: 10,
-                  padding: '6px 10px', outline: 'none', width: '100%',
-                  fontFamily: '"Inter Tight", sans-serif', marginBottom: 4,
-                }} />
-              : <div style={{ fontSize: 19, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif', marginBottom: 2 }}>{name}</div>
-            }
-            <div style={{ fontSize: 13, color: '#6e6e73' }}>{condition}</div>
-            <div style={{ fontSize: 12, color: '#0071e3', marginTop: 3 }}>
-              Under {doctorName}
-            </div>
-          </div>
-          <ScoreRing score={score} />
+      <main style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>
+
+        {/* Page title */}
+        <div style={{ marginBottom: 24 }}>
+          <h1 style={{ fontSize: 32, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif', margin: 0 }}>
+            My profile
+          </h1>
+          <p style={{ fontSize: 17, color: '#6e6e73', marginTop: 8 }}>
+            Your recovery details and account settings
+          </p>
         </div>
-
-        {/* Stat pills */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: -1 }}>
-          {[
-            { label: 'Sessions', value: sessionsCount },
-            { label: 'Streak', value: `${streak}d 🔥` },
-            { label: 'Avg score', value: avgScore },
-          ].map((s, i) => (
-            <div key={i} style={{
-              flex: 1, textAlign: 'center', padding: '12px 0',
-              borderRight: i < 2 ? '1px solid #f5f5f7' : 'none',
-            }}>
-              <div style={{ fontSize: 19, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif' }}>{s.value}</div>
-              <div style={{ fontSize: 11, color: '#6e6e73', marginTop: 2 }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Tabs */}
-        <div style={{ display: 'flex', marginTop: 8 }}>
-          {['overview', 'progress', 'sessions'].map(t => (
-            <button key={t} onClick={() => setTab(t)} style={{
-              flex: 1, background: 'none', border: 'none',
-              borderBottom: tab === t ? '2px solid #0071e3' : '2px solid transparent',
-              padding: '10px 0', fontSize: 13, fontWeight: 600,
-              color: tab === t ? '#1d1d1f' : '#6e6e73',
-              cursor: 'pointer', textTransform: 'capitalize',
-              transition: 'color 0.15s',
-            }}>{t}</button>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Body ── */}
-      <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
 
         {error && (
           <div style={{
             background: '#ff3b3010', border: '1px solid #ff3b3030',
             borderRadius: 12, padding: '12px 16px',
             fontSize: 13, color: '#ff3b30', lineHeight: 1.5,
+            marginBottom: 16,
           }}>
             {error}
           </div>
@@ -323,23 +304,81 @@ export default function PatientProfile() {
           </div>
         )}
 
+        {/* Identity + Stats Card */}
+        <Card style={{ marginBottom: 16 }}>
+          {/* Avatar + name + score ring */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+            <Avatar name={patientName} size={64} />
+            <div style={{ flex: 1 }}>
+              {editing
+                ? <input value={name} onChange={e => setName(e.target.value)} style={{
+                    fontSize: 19, fontWeight: 600, color: '#1d1d1f',
+                    border: '1px solid #0071e3', borderRadius: 10,
+                    padding: '6px 10px', outline: 'none', width: '100%',
+                    fontFamily: '"Inter Tight", sans-serif', marginBottom: 4,
+                  }} />
+                : <div style={{ fontSize: 19, fontWeight: 600, color: '#1d1d1f', fontFamily: '"Inter Tight", sans-serif', marginBottom: 2 }}>{name}</div>
+              }
+              <div style={{ fontSize: 13, color: '#6e6e73' }}>{condition}</div>
+              <div style={{ fontSize: 12, color: '#0071e3', marginTop: 3 }}>
+                Under {doctorName}
+              </div>
+            </div>
+            <ScoreRing score={score} />
+          </div>
+
+          {/* Stats row — StatCard mini pattern */}
+          <div style={{
+            display: 'flex', borderTop: '1px solid #f5f5f7',
+            marginLeft: -20, marginRight: -20, marginBottom: -20,
+          }}>
+            {[
+              { label: 'Sessions', value: sessionsCount },
+              { label: 'Streak', value: `${streak}d 🔥` },
+              { label: 'Avg score', value: avgScore },
+            ].map((s, i) => (
+              <div key={i} style={{
+                flex: 1, borderRight: i < 2 ? '1px solid #f5f5f7' : 'none',
+              }}>
+                <MiniStatCard label={s.label} value={s.value} />
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Tabs */}
+        <div style={{
+          display: 'flex', background: '#fff',
+          borderRadius: 12, border: '1px solid #d2d2d7',
+          marginBottom: 16, overflow: 'hidden',
+        }}>
+          {['overview', 'progress', 'sessions'].map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{
+              flex: 1, background: 'none', border: 'none',
+              borderBottom: tab === t ? '2px solid #0071e3' : '2px solid transparent',
+              padding: '12px 0', fontSize: 13, fontWeight: 600,
+              color: tab === t ? '#1d1d1f' : '#6e6e73',
+              cursor: 'pointer', textTransform: 'capitalize',
+              transition: 'color 0.15s',
+            }}>{t}</button>
+          ))}
+        </div>
+
         {/* OVERVIEW TAB */}
         {tab === 'overview' && (
           <>
-            {/* Personal info */}
-            <Card>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#1d1d1f', marginBottom: 4 }}>Personal information</div>
+            {/* Personal information */}
+            <Card style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 16, fontWeight: 600, color: '#1d1d1f', marginBottom: 4 }}>Personal information</div>
               <div style={{ fontSize: 12, color: '#6e6e73', marginBottom: 16 }}>Visible only to you and your doctor</div>
-              <>
-                <InfoRow label="Email" value={user?.email || 'Not set'} />
-                <InfoRow label="Age" value={age} />
-                <InfoRow label="Member since" value={joinedDate} />
-              </>
+              <InfoRow label="Email" value={user?.email || 'Not set'} />
+              <InfoRow label="Age" value={age} />
+              <InfoRow label="Member since" value={joinedDate} />
             </Card>
 
-            {/* Medical */}
-            <Card>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#1d1d1f', marginBottom: 16 }}>Medical details</div>
+            {/* Medical details */}
+            <Card style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 16, fontWeight: 600, color: '#1d1d1f', marginBottom: 16 }}>Medical details</div>
               <InfoRow label="Condition" value={condition} />
               <InfoRow label="Assigned doctor" value={doctorName} />
               <div style={{ paddingTop: 14 }}>
@@ -350,9 +389,9 @@ export default function PatientProfile() {
               </div>
             </Card>
 
-            {/* Danger zone */}
-            <Card style={{ borderColor: '#ff3b3020' }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#1d1d1f', marginBottom: 4 }}>Account</div>
+            {/* Account */}
+            <Card>
+              <div style={{ fontSize: 16, fontWeight: 600, color: '#1d1d1f', marginBottom: 4 }}>Account</div>
               <div style={{ fontSize: 13, color: '#6e6e73', marginBottom: 16 }}>Manage your account settings</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <button onClick={handleSignOut} style={{
@@ -361,7 +400,7 @@ export default function PatientProfile() {
                   cursor: 'pointer', textAlign: 'left', width: '100%',
                 }}>Sign out</button>
                 <button style={{
-                  background: '#fff0f0', border: '1px solid #ff3b3030', borderRadius: 12,
+                  background: 'none', border: 'none',
                   padding: '12px 16px', fontSize: 14, fontWeight: 600, color: '#ff3b30',
                   cursor: 'pointer', textAlign: 'left', width: '100%',
                 }}>Delete account</button>
@@ -373,7 +412,7 @@ export default function PatientProfile() {
         {/* PROGRESS TAB */}
         {tab === 'progress' && (
           <>
-            <Card>
+            <Card style={{ marginBottom: 16 }}>
               <div style={{ fontSize: 17, fontWeight: 600, color: '#1d1d1f', marginBottom: 4 }}>Score over time</div>
               <div style={{ fontSize: 13, color: '#6e6e73', marginBottom: 20 }}>Past 7 weeks</div>
               <ResponsiveContainer width="100%" height={180}>
@@ -446,7 +485,6 @@ export default function PatientProfile() {
                   padding: '14px 0',
                   borderBottom: i < recentSessions.length - 1 ? '1px solid #f5f5f7' : 'none',
                 }}>
-                  {/* Score circle */}
                   <div style={{
                     width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
                     background: s.score >= 75 ? '#34c75920' : '#ff9f0a20',
@@ -467,7 +505,7 @@ export default function PatientProfile() {
             </div>
           </Card>
         )}
-      </div>
+      </main>
 
       <PatientBottomNav />
     </div>
