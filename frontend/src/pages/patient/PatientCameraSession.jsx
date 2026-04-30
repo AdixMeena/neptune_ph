@@ -1,3 +1,4 @@
+// PatientCameraSession.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PatientApprovalGate from '../../components/PatientApprovalGate.jsx'
@@ -10,22 +11,22 @@ const POSE_CONNECTIONS = [
   [27, 29], [28, 30], [29, 31], [30, 32],
 ]
 
-// ── Voice helper ─────────────────────────────────────────────────────────────
-// Uses browser built-in Web Speech API — no API key, completely free
-function speak(text, { rate = 0.95, pitch = 1.0, volume = 1.0 } = {}) {
+// ── Voice helper ──────────────────────────────────────────────────────────────
+// lang: 'en-US' for English, 'ur-PK' for Urdu
+function speak(text, { rate = 0.95, pitch = 1.0, volume = 1.0, lang = 'en-US' } = {}) {
   if (!window.speechSynthesis || !text) return
-  window.speechSynthesis.cancel()  // stop anything currently speaking
+  window.speechSynthesis.cancel()
   const utterance    = new SpeechSynthesisUtterance(text)
   utterance.rate     = rate
   utterance.pitch    = pitch
   utterance.volume   = volume
-  utterance.lang     = 'en-US'
+  utterance.lang     = lang
   window.speechSynthesis.speak(utterance)
 }
 
 export default function PatientCameraSession() {
-  const { id }     = useParams()
-  const navigate   = useNavigate()
+  const { id }   = useParams()
+  const navigate = useNavigate()
 
   const [exerciseName, setExerciseName] = useState('Exercise')
   const [feedback,     setFeedback]     = useState('Initializing...')
@@ -35,6 +36,9 @@ export default function PatientCameraSession() {
   const [timer,        setTimer]        = useState(0)
   const [analyzing,    setAnalyzing]    = useState(false)
   const [analyzingMsg, setAnalyzingMsg] = useState('')
+
+  // ── NEW: language toggle state — 'en' = English, 'ur' = Urdu ─────────────
+  const [voiceLang, setVoiceLang] = useState('en')
 
   const videoRef         = useRef(null)
   const overlayRef       = useRef(null)
@@ -46,11 +50,15 @@ export default function PatientCameraSession() {
   const scoreRef         = useRef(0)
   const repsRef          = useRef(0)
   const timerRef         = useRef(0)
-  const lastFeedbackRef  = useRef('')       // track last spoken feedback
-  const feedbackTimerRef = useRef(null)     // cooldown timer for voice feedback
-  const voiceIntroSaid   = useRef(false)    // only say intro once
+  const lastFeedbackRef  = useRef('')
+  const feedbackTimerRef = useRef(null)
+  const voiceIntroSaid   = useRef(false)
 
-  // Keep refs in sync
+  // Keep voiceLang accessible inside WS callback without re-registering the effect
+  const voiceLangRef = useRef(voiceLang)
+  useEffect(() => { voiceLangRef.current = voiceLang }, [voiceLang])
+
+  // Keep score/reps/timer refs in sync
   useEffect(() => { scoreRef.current = score }, [score])
   useEffect(() => { repsRef.current  = reps  }, [reps])
   useEffect(() => { timerRef.current = timer }, [timer])
@@ -100,7 +108,13 @@ export default function PatientCameraSession() {
     }
   }, [])
 
-  // WebSocket — receives landmarks, scores, feedback, and voice_intro from backend
+  // ── WebSocket ─────────────────────────────────────────────────────────────
+  // Expects the backend to send:
+  //   { landmarks, session_score, rep_counted, joint_scores, feedback, voice_intro }
+  //
+  // For bilingual support the backend should also send:
+  //   { feedback_ur: "اردو میں فیڈبیک", voice_intro_ur: "اردو میں تعارف" }
+  // If those keys are absent, English text is used as fallback for Urdu mode too.
   useEffect(() => {
     const wsBase = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
     const ws     = new WebSocket(`${wsBase}/ws/session/${sessionIdRef.current}?exercise_id=${id}`)
@@ -109,36 +123,55 @@ export default function PatientCameraSession() {
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data)
+        const lang = voiceLangRef.current               // 'en' or 'ur'
+        const bcp  = lang === 'ur' ? 'ur-PK' : 'en-US' // BCP-47 for speechSynthesis
 
         if (Array.isArray(data.landmarks))          setLandmarks(data.landmarks)
         if (typeof data.session_score === 'number') setScore(data.session_score)
+
         if (data.rep_counted) {
           setReps(r => r + 1)
-          // Speak rep count encouragement
-          speak('Good rep', { rate: 1.1 })
-          return  // skip feedback cue on rep frames
+          // Rep encouragement — pick language variant when available
+          const repMsg = lang === 'ur'
+            ? (data.rep_msg_ur || 'اچھی کوشش')   // fallback Urdu "Good try"
+            : (data.rep_msg_en || 'Good rep')
+          speak(repMsg, { rate: 1.1, lang: bcp })
+          return
         }
+
         if (data.joint_scores && typeof data.joint_scores === 'object') {
           jointScoresRef.current = data.joint_scores
         }
 
         // ── Voice intro — spoken exactly once when pose first detected ──────
-        if (data.voice_intro && !voiceIntroSaid.current) {
-          voiceIntroSaid.current = true
-          speak(data.voice_intro, { rate: 0.9 })
-          setFeedback(data.feedback || 'Get ready')
-          return
+        if (!voiceIntroSaid.current) {
+          const introText = lang === 'ur'
+            ? (data.voice_intro_ur || data.voice_intro)  // fallback to EN text
+            : data.voice_intro
+
+          if (introText) {
+            voiceIntroSaid.current = true
+            speak(introText, { rate: 0.9, lang: bcp })
+            setFeedback(data.feedback || 'Get ready')
+            return
+          }
         }
 
         // ── Live feedback — spoken at most every 4 seconds, only if changed ─
         if (data.feedback) {
-          setFeedback(data.feedback)
-          const isNew      = data.feedback !== lastFeedbackRef.current
-          const noTimer    = !feedbackTimerRef.current
+          const feedbackText = lang === 'ur'
+            ? (data.feedback_ur || data.feedback)         // fallback to EN text
+            : data.feedback
+
+          setFeedback(feedbackText)
+
+          const isNew   = feedbackText !== lastFeedbackRef.current
+          const noTimer = !feedbackTimerRef.current
+
           if (isNew && noTimer) {
-            lastFeedbackRef.current = data.feedback
-            speak(data.feedback, { rate: 0.95 })
-            // cooldown: don't speak again for 4 seconds
+            lastFeedbackRef.current = feedbackText
+            speak(feedbackText, { rate: 0.95, lang: bcp })
+            // Cooldown: don't speak again for 4 seconds
             feedbackTimerRef.current = setTimeout(() => {
               feedbackTimerRef.current = null
             }, 4000)
@@ -220,13 +253,34 @@ export default function PatientCameraSession() {
 
   const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
 
-  // ── Stop handler ────────────────────────────────────────────────────────────
+  // ── Language toggle handler ───────────────────────────────────────────────
+  // Switching language mid-session resets intro + feedback state so the new
+  // language kicks in cleanly on the very next WS frame.
+  const handleLangToggle = () => {
+    window.speechSynthesis?.cancel()
+    if (feedbackTimerRef.current) {
+      clearTimeout(feedbackTimerRef.current)
+      feedbackTimerRef.current = null
+    }
+    lastFeedbackRef.current = ''   // force next feedback to be spoken fresh
+    voiceIntroSaid.current  = false // allow intro to re-fire in new language
+    setVoiceLang(prev => prev === 'en' ? 'ur' : 'en')
+  }
+
+  // ── Stop handler ──────────────────────────────────────────────────────────
   async function handleStop() {
-    if (wsRef.current)           wsRef.current.close()
+    if (wsRef.current)            wsRef.current.close()
     clearInterval(sendTimerRef.current)
     if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current)
     window.speechSynthesis?.cancel()
-    speak('Session complete. Analyzing your performance.')
+
+    const lang    = voiceLangRef.current
+    const bcp     = lang === 'ur' ? 'ur-PK' : 'en-US'
+    const doneMsg = lang === 'ur'
+      ? 'سیشن مکمل ہو گیا۔ آپ کی کارکردگی کا تجزیہ ہو رہا ہے۔'
+      : 'Session complete. Analyzing your performance.'
+    speak(doneMsg, { lang: bcp })
+
     setAnalyzing(true)
 
     const finalScore    = scoreRef.current
@@ -241,14 +295,12 @@ export default function PatientCameraSession() {
 
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
-    // Get patient id
     let patientId = 'unknown'
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (user?.id) patientId = user.id
     } catch { /* continue */ }
 
-    // Save session
     setAnalyzingMsg('Saving session...')
     let sessionId = null
     try {
@@ -268,7 +320,6 @@ export default function PatientCameraSession() {
       sessionId   = saved.session_id || null
     } catch { /* continue */ }
 
-    // Run AI analysis
     setAnalyzingMsg('Analyzing your performance...')
     let analysis = null
     if (sessionId) {
@@ -298,7 +349,7 @@ export default function PatientCameraSession() {
     })
   }
 
-  // ── Analyzing overlay ───────────────────────────────────────────────────────
+  // ── Analyzing overlay ─────────────────────────────────────────────────────
   if (analyzing) {
     return (
       <div style={{
@@ -320,6 +371,7 @@ export default function PatientCameraSession() {
     )
   }
 
+  // ── Main render ───────────────────────────────────────────────────────────
   return (
     <PatientApprovalGate showNav={false}>
       <div style={{
@@ -338,7 +390,7 @@ export default function PatientCameraSession() {
         />
         <canvas ref={captureRef} style={{ display: 'none' }} />
 
-        {/* Top bar */}
+        {/* ── Top bar ── */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0,
           background: 'rgba(0,0,0,0.70)',
@@ -352,7 +404,53 @@ export default function PatientCameraSession() {
           <div style={{ fontSize: 14, color: '#6e6e73', minWidth: 50, textAlign: 'right' }}>{fmt(timer)}</div>
         </div>
 
-        {/* Right score card */}
+        {/* ── NEW: Language toggle pill (top-left, below top bar) ── */}
+        {/* Tap to switch between English and Urdu voice feedback     */}
+        <div style={{
+          position: 'absolute', top: 110, left: 16,
+          display: 'flex', alignItems: 'center', gap: 8,
+        }}>
+          {/* Toggle track */}
+          <button
+            onClick={handleLangToggle}
+            title="Switch voice language"
+            style={{
+              display: 'flex', alignItems: 'center',
+              background: 'rgba(39,39,41,0.88)',
+              border: 'none', borderRadius: 999,
+              padding: '4px 6px', cursor: 'pointer', gap: 6,
+            }}
+          >
+            {/* EN label */}
+            <span style={{
+              fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999,
+              background: voiceLang === 'en' ? '#0071e3' : 'transparent',
+              color:      voiceLang === 'en' ? '#fff'    : '#6e6e73',
+              transition: 'background 0.2s, color 0.2s',
+            }}>
+              EN
+            </span>
+            {/* UR label */}
+            <span style={{
+              fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999,
+              background: voiceLang === 'ur' ? '#0071e3' : 'transparent',
+              color:      voiceLang === 'ur' ? '#fff'    : '#6e6e73',
+              transition: 'background 0.2s, color 0.2s',
+            }}>
+              اردو
+            </span>
+          </button>
+          {/* Small mic icon to hint it's about voice */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="#6e6e73" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8"  y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+
+        {/* ── Right score card ── */}
         <div style={{
           position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
           background: 'rgba(39,39,41,0.88)', borderRadius: 12,
@@ -376,7 +474,7 @@ export default function PatientCameraSession() {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* ── Bottom bar ── */}
         <div style={{
           position: 'absolute', bottom: 0, left: 0, right: 0,
           background: 'rgba(0,0,0,0.70)',
