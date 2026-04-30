@@ -29,9 +29,19 @@ function DoctorIcon() {
   )
 }
 
+function ChatIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <circle cx="12" cy="10" r="1" fill="currentColor"/><circle cx="8" cy="10" r="1" fill="currentColor"/><circle cx="16" cy="10" r="1" fill="currentColor"/>
+    </svg>
+  )
+}
+
 const tabs = [
   { label: 'Home', path: '/patient', icon: HomeIcon },
   { label: 'Doctors', path: '/patient/find-doctor', icon: DoctorIcon },
+  { label: 'Chat', path: '/patient/chat', icon: ChatIcon },
   { label: 'Profile', path: '/patient/profile', icon: UserIcon },
 ]
 

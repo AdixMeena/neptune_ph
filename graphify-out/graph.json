@@ -16,7 +16,7 @@
       "label": "JointScore",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L46",
+      "source_location": "L55",
       "id": "backend_main_jointscore",
       "community": 0,
       "norm_label": "jointscore"
@@ -34,7 +34,7 @@
       "label": "SessionResult",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L51",
+      "source_location": "L60",
       "id": "backend_main_sessionresult",
       "community": 0,
       "norm_label": "sessionresult"
@@ -43,16 +43,25 @@
       "label": "FeedbackPayload",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L59",
+      "source_location": "L68",
       "id": "backend_main_feedbackpayload",
       "community": 0,
       "norm_label": "feedbackpayload"
     },
     {
+      "label": "AnalyzeRequest",
+      "file_type": "code",
+      "source_file": "backend\\main.py",
+      "source_location": "L73",
+      "id": "backend_main_analyzerequest",
+      "community": 0,
+      "norm_label": "analyzerequest"
+    },
+    {
       "label": "score_label()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L65",
+      "source_location": "L79",
       "id": "backend_main_score_label",
       "community": 0,
       "norm_label": "score_label()"
@@ -61,7 +70,7 @@
       "label": "angle_degrees()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L105",
+      "source_location": "L118",
       "id": "backend_main_angle_degrees",
       "community": 0,
       "norm_label": "angle_degrees()"
@@ -70,7 +79,7 @@
       "label": "midpoint()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L118",
+      "source_location": "L131",
       "id": "backend_main_midpoint",
       "community": 0,
       "norm_label": "midpoint()"
@@ -79,7 +88,7 @@
       "label": "score_for_angle()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L122",
+      "source_location": "L135",
       "id": "backend_main_score_for_angle",
       "community": 0,
       "norm_label": "score_for_angle()"
@@ -88,7 +97,7 @@
       "label": "health()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L132",
+      "source_location": "L146",
       "id": "backend_main_health",
       "community": 0,
       "norm_label": "health()"
@@ -97,7 +106,7 @@
       "label": "session_ws()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L137",
+      "source_location": "L156",
       "id": "backend_main_session_ws",
       "community": 0,
       "norm_label": "session_ws()"
@@ -106,25 +115,43 @@
       "label": "save_session()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L291",
+      "source_location": "L301",
       "id": "backend_main_save_session",
       "community": 0,
       "norm_label": "save_session()"
     },
     {
+      "label": "analyze_session()",
+      "file_type": "code",
+      "source_file": "backend\\main.py",
+      "source_location": "L335",
+      "id": "backend_main_analyze_session",
+      "community": 0,
+      "norm_label": "analyze_session()"
+    },
+    {
       "label": "get_patient_stats()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L318",
+      "source_location": "L518",
       "id": "backend_main_get_patient_stats",
       "community": 0,
       "norm_label": "get_patient_stats()"
     },
     {
+      "label": "get_patient_analysis()",
+      "file_type": "code",
+      "source_file": "backend\\main.py",
+      "source_location": "L546",
+      "id": "backend_main_get_patient_analysis",
+      "community": 0,
+      "norm_label": "get_patient_analysis()"
+    },
+    {
       "label": "send_feedback()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L346",
+      "source_location": "L569",
       "id": "backend_main_send_feedback",
       "community": 0,
       "norm_label": "send_feedback()"
@@ -133,7 +160,7 @@
       "label": "get_feedback()",
       "file_type": "code",
       "source_file": "backend\\main.py",
-      "source_location": "L368",
+      "source_location": "L591",
       "id": "backend_main_get_feedback",
       "community": 0,
       "norm_label": "get_feedback()"
@@ -142,37 +169,55 @@
       "label": "Called after a patient completes a camera session.     Persists the session sco",
       "file_type": "rationale",
       "source_file": "backend\\main.py",
-      "source_location": "L292",
+      "source_location": "L302",
       "community": 0,
       "norm_label": "called after a patient completes a camera session.     persists the session sco",
-      "id": "backend_main_rationale_292"
+      "id": "backend_main_rationale_302"
+    },
+    {
+      "label": "AI agent endpoint. Call this right after /session returns a session_id.     Fet",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L336",
+      "community": 0,
+      "norm_label": "ai agent endpoint. call this right after /session returns a session_id.     fet",
+      "id": "backend_main_rationale_336"
     },
     {
       "label": "Returns aggregated session stats for a patient.",
       "file_type": "rationale",
       "source_file": "backend\\main.py",
-      "source_location": "L319",
+      "source_location": "L519",
       "community": 0,
       "norm_label": "returns aggregated session stats for a patient.",
-      "id": "backend_main_rationale_319"
+      "id": "backend_main_rationale_519"
+    },
+    {
+      "label": "Returns recent session analyses for a patient.     Used by DoctorPatientDetail",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L547",
+      "community": 0,
+      "norm_label": "returns recent session analyses for a patient.     used by doctorpatientdetail",
+      "id": "backend_main_rationale_547"
     },
     {
       "label": "Doctor sends feedback message to a patient.",
       "file_type": "rationale",
       "source_file": "backend\\main.py",
-      "source_location": "L347",
+      "source_location": "L570",
       "community": 0,
       "norm_label": "doctor sends feedback message to a patient.",
-      "id": "backend_main_rationale_347"
+      "id": "backend_main_rationale_570"
     },
     {
       "label": "Fetch all feedback messages for a patient.",
       "file_type": "rationale",
       "source_file": "backend\\main.py",
-      "source_location": "L369",
+      "source_location": "L592",
       "community": 0,
       "norm_label": "fetch all feedback messages for a patient.",
-      "id": "backend_main_rationale_369"
+      "id": "backend_main_rationale_592"
     },
     {
       "label": "vite.config.js",
@@ -180,7 +225,7 @@
       "source_file": "frontend\\vite.config.js",
       "source_location": "L1",
       "id": "frontend_vite_config_js",
-      "community": 22,
+      "community": 23,
       "norm_label": "vite.config.js"
     },
     {
@@ -189,34 +234,34 @@
       "source_file": "frontend\\src\\App.jsx",
       "source_location": "L1",
       "id": "frontend_src_app_jsx",
-      "community": 7,
+      "community": 8,
       "norm_label": "app.jsx"
     },
     {
       "label": "LoadingScreen()",
       "file_type": "code",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "id": "src_app_loadingscreen",
-      "community": 7,
+      "community": 8,
       "norm_label": "loadingscreen()"
     },
     {
       "label": "RequireAuth()",
       "file_type": "code",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L54",
+      "source_location": "L55",
       "id": "src_app_requireauth",
-      "community": 7,
+      "community": 8,
       "norm_label": "requireauth()"
     },
     {
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "id": "src_app_app",
-      "community": 7,
+      "community": 8,
       "norm_label": "app()"
     },
     {
@@ -225,7 +270,7 @@
       "source_file": "frontend\\src\\data.js",
       "source_location": "L1",
       "id": "frontend_src_data_js",
-      "community": 23,
+      "community": 24,
       "norm_label": "data.js"
     },
     {
@@ -234,7 +279,7 @@
       "source_file": "frontend\\src\\main.jsx",
       "source_location": "L1",
       "id": "frontend_src_main_jsx",
-      "community": 24,
+      "community": 25,
       "norm_label": "main.jsx"
     },
     {
@@ -243,7 +288,7 @@
       "source_file": "frontend\\src\\components\\DoctorBottomNav.jsx",
       "source_location": "L1",
       "id": "frontend_src_components_doctorbottomnav_jsx",
-      "community": 5,
+      "community": 6,
       "norm_label": "doctorbottomnav.jsx"
     },
     {
@@ -252,7 +297,7 @@
       "source_file": "frontend\\src\\components\\DoctorBottomNav.jsx",
       "source_location": "L4",
       "id": "components_doctorbottomnav_patientsicon",
-      "community": 5,
+      "community": 6,
       "norm_label": "patientsicon()"
     },
     {
@@ -261,7 +306,7 @@
       "source_file": "frontend\\src\\components\\DoctorBottomNav.jsx",
       "source_location": "L15",
       "id": "components_doctorbottomnav_addicon",
-      "community": 5,
+      "community": 6,
       "norm_label": "addicon()"
     },
     {
@@ -270,7 +315,7 @@
       "source_file": "frontend\\src\\components\\DoctorBottomNav.jsx",
       "source_location": "L25",
       "id": "components_doctorbottomnav_usericon",
-      "community": 5,
+      "community": 6,
       "norm_label": "usericon()"
     },
     {
@@ -279,7 +324,7 @@
       "source_file": "frontend\\src\\components\\DoctorBottomNav.jsx",
       "source_location": "L40",
       "id": "components_doctorbottomnav_doctorbottomnav",
-      "community": 5,
+      "community": 6,
       "norm_label": "doctorbottomnav()"
     },
     {
@@ -288,7 +333,7 @@
       "source_file": "frontend\\src\\components\\DoctorHeader.jsx",
       "source_location": "L1",
       "id": "frontend_src_components_doctorheader_jsx",
-      "community": 12,
+      "community": 13,
       "norm_label": "doctorheader.jsx"
     },
     {
@@ -297,7 +342,7 @@
       "source_file": "frontend\\src\\components\\DoctorHeader.jsx",
       "source_location": "L6",
       "id": "components_doctorheader_doctorheader",
-      "community": 12,
+      "community": 13,
       "norm_label": "doctorheader()"
     },
     {
@@ -306,7 +351,7 @@
       "source_file": "frontend\\src\\components\\DoctorSidebar.jsx",
       "source_location": "L1",
       "id": "frontend_src_components_doctorsidebar_jsx",
-      "community": 8,
+      "community": 9,
       "norm_label": "doctorsidebar.jsx"
     },
     {
@@ -315,7 +360,7 @@
       "source_file": "frontend\\src\\components\\DoctorSidebar.jsx",
       "source_location": "L13",
       "id": "components_doctorsidebar_navicon",
-      "community": 8,
+      "community": 9,
       "norm_label": "navicon()"
     },
     {
@@ -324,7 +369,7 @@
       "source_file": "frontend\\src\\components\\DoctorSidebar.jsx",
       "source_location": "L42",
       "id": "components_doctorsidebar_doctorsidebar",
-      "community": 8,
+      "community": 9,
       "norm_label": "doctorsidebar()"
     },
     {
@@ -333,7 +378,7 @@
       "source_file": "frontend\\src\\components\\PatientApprovalGate.jsx",
       "source_location": "L1",
       "id": "frontend_src_components_patientapprovalgate_jsx",
-      "community": 13,
+      "community": 14,
       "norm_label": "patientapprovalgate.jsx"
     },
     {
@@ -342,7 +387,7 @@
       "source_file": "frontend\\src\\components\\PatientApprovalGate.jsx",
       "source_location": "L7",
       "id": "components_patientapprovalgate_patientapprovalgate",
-      "community": 13,
+      "community": 14,
       "norm_label": "patientapprovalgate()"
     },
     {
@@ -351,7 +396,7 @@
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
       "source_location": "L1",
       "id": "frontend_src_components_patientbottomnav_jsx",
-      "community": 6,
+      "community": 2,
       "norm_label": "patientbottomnav.jsx"
     },
     {
@@ -360,7 +405,7 @@
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
       "source_location": "L4",
       "id": "components_patientbottomnav_homeicon",
-      "community": 6,
+      "community": 2,
       "norm_label": "homeicon()"
     },
     {
@@ -369,7 +414,7 @@
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
       "source_location": "L12",
       "id": "components_patientbottomnav_usericon",
-      "community": 6,
+      "community": 2,
       "norm_label": "usericon()"
     },
     {
@@ -378,16 +423,25 @@
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
       "source_location": "L21",
       "id": "components_patientbottomnav_doctoricon",
-      "community": 6,
+      "community": 2,
       "norm_label": "doctoricon()"
+    },
+    {
+      "label": "ChatIcon()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
+      "source_location": "L32",
+      "id": "components_patientbottomnav_chaticon",
+      "community": 2,
+      "norm_label": "chaticon()"
     },
     {
       "label": "PatientBottomNav()",
       "file_type": "code",
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
-      "source_location": "L38",
+      "source_location": "L48",
       "id": "components_patientbottomnav_patientbottomnav",
-      "community": 6,
+      "community": 2,
       "norm_label": "patientbottomnav()"
     },
     {
@@ -477,7 +531,7 @@
       "source_file": "frontend\\src\\lib\\supabase.js",
       "source_location": "L1",
       "id": "frontend_src_lib_supabase_js",
-      "community": 25,
+      "community": 26,
       "norm_label": "supabase.js"
     },
     {
@@ -486,7 +540,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorAddPatient.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_doctor_doctoraddpatient_jsx",
-      "community": 14,
+      "community": 15,
       "norm_label": "doctoraddpatient.jsx"
     },
     {
@@ -495,7 +549,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorAddPatient.jsx",
       "source_location": "L9",
       "id": "doctor_doctoraddpatient_doctoraddpatient",
-      "community": 14,
+      "community": 15,
       "norm_label": "doctoraddpatient()"
     },
     {
@@ -504,7 +558,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorAssignExercise.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_doctor_doctorassignexercise_jsx",
-      "community": 15,
+      "community": 16,
       "norm_label": "doctorassignexercise.jsx"
     },
     {
@@ -513,7 +567,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorAssignExercise.jsx",
       "source_location": "L9",
       "id": "doctor_doctorassignexercise_doctorassignexercise",
-      "community": 15,
+      "community": 16,
       "norm_label": "doctorassignexercise()"
     },
     {
@@ -522,7 +576,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_doctor_doctordashboard_jsx",
-      "community": 2,
+      "community": 3,
       "norm_label": "doctordashboard.jsx"
     },
     {
@@ -531,7 +585,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L10",
       "id": "doctor_doctordashboard_minichart",
-      "community": 2,
+      "community": 3,
       "norm_label": "minichart()"
     },
     {
@@ -540,7 +594,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L21",
       "id": "doctor_doctordashboard_statcard",
-      "community": 2,
+      "community": 3,
       "norm_label": "statcard()"
     },
     {
@@ -549,7 +603,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L31",
       "id": "doctor_doctordashboard_doctordashboard",
-      "community": 2,
+      "community": 3,
       "norm_label": "doctordashboard()"
     },
     {
@@ -558,7 +612,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L293",
       "id": "doctor_doctordashboard_addpatientcard",
-      "community": 2,
+      "community": 3,
       "norm_label": "addpatientcard()"
     },
     {
@@ -567,7 +621,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorDashboard.jsx",
       "source_location": "L316",
       "id": "doctor_doctordashboard_patientcard",
-      "community": 2,
+      "community": 3,
       "norm_label": "patientcard()"
     },
     {
@@ -576,7 +630,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorPatientDetail.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_doctor_doctorpatientdetail_jsx",
-      "community": 9,
+      "community": 10,
       "norm_label": "doctorpatientdetail.jsx"
     },
     {
@@ -585,16 +639,16 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorPatientDetail.jsx",
       "source_location": "L12",
       "id": "doctor_doctorpatientdetail_doctorpatientdetail",
-      "community": 9,
+      "community": 10,
       "norm_label": "doctorpatientdetail()"
     },
     {
       "label": "BtnDestructiveSmall()",
       "file_type": "code",
       "source_file": "frontend\\src\\pages\\doctor\\DoctorPatientDetail.jsx",
-      "source_location": "L379",
+      "source_location": "L580",
       "id": "doctor_doctorpatientdetail_btndestructivesmall",
-      "community": 9,
+      "community": 10,
       "norm_label": "btndestructivesmall()"
     },
     {
@@ -603,7 +657,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_doctor_doctorprofile_jsx",
-      "community": 3,
+      "community": 4,
       "norm_label": "doctorprofile.jsx"
     },
     {
@@ -612,7 +666,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L11",
       "id": "doctor_doctorprofile_avatar",
-      "community": 3,
+      "community": 4,
       "norm_label": "avatar()"
     },
     {
@@ -621,7 +675,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L25",
       "id": "doctor_doctorprofile_statcard",
-      "community": 3,
+      "community": 4,
       "norm_label": "statcard()"
     },
     {
@@ -630,7 +684,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L35",
       "id": "doctor_doctorprofile_inforow",
-      "community": 3,
+      "community": 4,
       "norm_label": "inforow()"
     },
     {
@@ -639,7 +693,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L54",
       "id": "doctor_doctorprofile_doctorprofile",
-      "community": 3,
+      "community": 4,
       "norm_label": "doctorprofile()"
     },
     {
@@ -648,7 +702,7 @@
       "source_file": "frontend\\src\\pages\\doctor\\DoctorProfile.jsx",
       "source_location": "L491",
       "id": "doctor_doctorprofile_togglerow",
-      "community": 3,
+      "community": 4,
       "norm_label": "togglerow()"
     },
     {
@@ -657,16 +711,16 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientCameraSession.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientcamerasession_jsx",
-      "community": 16,
+      "community": 17,
       "norm_label": "patientcamerasession.jsx"
     },
     {
       "label": "PatientCameraSession()",
       "file_type": "code",
       "source_file": "frontend\\src\\pages\\patient\\PatientCameraSession.jsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "patient_patientcamerasession_patientcamerasession",
-      "community": 16,
+      "community": 17,
       "norm_label": "patientcamerasession()"
     },
     {
@@ -675,7 +729,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientDashboard.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientdashboard_jsx",
-      "community": 10,
+      "community": 11,
       "norm_label": "patientdashboard.jsx"
     },
     {
@@ -684,7 +738,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientDashboard.jsx",
       "source_location": "L12",
       "id": "patient_patientdashboard_statcard",
-      "community": 10,
+      "community": 11,
       "norm_label": "statcard()"
     },
     {
@@ -693,7 +747,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientDashboard.jsx",
       "source_location": "L22",
       "id": "patient_patientdashboard_patientdashboard",
-      "community": 10,
+      "community": 11,
       "norm_label": "patientdashboard()"
     },
     {
@@ -702,7 +756,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientExerciseDetail.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientexercisedetail_jsx",
-      "community": 17,
+      "community": 18,
       "norm_label": "patientexercisedetail.jsx"
     },
     {
@@ -711,7 +765,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientExerciseDetail.jsx",
       "source_location": "L8",
       "id": "patient_patientexercisedetail_patientexercisedetail",
-      "community": 17,
+      "community": 18,
       "norm_label": "patientexercisedetail()"
     },
     {
@@ -720,7 +774,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientFeedback.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientfeedback_jsx",
-      "community": 18,
+      "community": 19,
       "norm_label": "patientfeedback.jsx"
     },
     {
@@ -729,7 +783,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientFeedback.jsx",
       "source_location": "L7",
       "id": "patient_patientfeedback_patientfeedback",
-      "community": 18,
+      "community": 19,
       "norm_label": "patientfeedback()"
     },
     {
@@ -738,7 +792,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientFindDoctor.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientfinddoctor_jsx",
-      "community": 19,
+      "community": 20,
       "norm_label": "patientfinddoctor.jsx"
     },
     {
@@ -747,8 +801,53 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientFindDoctor.jsx",
       "source_location": "L8",
       "id": "patient_patientfinddoctor_patientfinddoctor",
-      "community": 19,
+      "community": 20,
       "norm_label": "patientfinddoctor()"
+    },
+    {
+      "label": "PatientHealthChat.jsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L1",
+      "id": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "community": 7,
+      "norm_label": "patienthealthchat.jsx"
+    },
+    {
+      "label": "formatTime()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L39",
+      "id": "patient_patienthealthchat_formattime",
+      "community": 7,
+      "norm_label": "formattime()"
+    },
+    {
+      "label": "TypingDots()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L43",
+      "id": "patient_patienthealthchat_typingdots",
+      "community": 7,
+      "norm_label": "typingdots()"
+    },
+    {
+      "label": "MessageBubble()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L65",
+      "id": "patient_patienthealthchat_messagebubble",
+      "community": 7,
+      "norm_label": "messagebubble()"
+    },
+    {
+      "label": "PatientHealthChat()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L129",
+      "id": "patient_patienthealthchat_patienthealthchat",
+      "community": 7,
+      "norm_label": "patienthealthchat()"
     },
     {
       "label": "PatientProfile.jsx",
@@ -756,7 +855,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientprofile_jsx",
-      "community": 4,
+      "community": 5,
       "norm_label": "patientprofile.jsx"
     },
     {
@@ -765,7 +864,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L10",
       "id": "patient_patientprofile_avatar",
-      "community": 4,
+      "community": 5,
       "norm_label": "avatar()"
     },
     {
@@ -774,7 +873,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L24",
       "id": "patient_patientprofile_scorering",
-      "community": 4,
+      "community": 5,
       "norm_label": "scorering()"
     },
     {
@@ -783,7 +882,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L50",
       "id": "patient_patientprofile_inforow",
-      "community": 4,
+      "community": 5,
       "norm_label": "inforow()"
     },
     {
@@ -792,7 +891,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L62",
       "id": "patient_patientprofile_ministatcard",
-      "community": 4,
+      "community": 5,
       "norm_label": "ministatcard()"
     },
     {
@@ -801,7 +900,7 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L72",
       "id": "patient_patientprofile_patientprofile",
-      "community": 4,
+      "community": 5,
       "norm_label": "patientprofile()"
     },
     {
@@ -810,25 +909,25 @@
       "source_file": "frontend\\src\\pages\\patient\\PatientScoreScreen.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_patient_patientscorescreen_jsx",
-      "community": 11,
+      "community": 12,
       "norm_label": "patientscorescreen.jsx"
     },
     {
       "label": "AnimatedNumber()",
       "file_type": "code",
       "source_file": "frontend\\src\\pages\\patient\\PatientScoreScreen.jsx",
-      "source_location": "L5",
+      "source_location": "L4",
       "id": "patient_patientscorescreen_animatednumber",
-      "community": 11,
+      "community": 12,
       "norm_label": "animatednumber()"
     },
     {
       "label": "PatientScoreScreen()",
       "file_type": "code",
       "source_file": "frontend\\src\\pages\\patient\\PatientScoreScreen.jsx",
-      "source_location": "L21",
+      "source_location": "L20",
       "id": "patient_patientscorescreen_patientscorescreen",
-      "community": 11,
+      "community": 12,
       "norm_label": "patientscorescreen()"
     },
     {
@@ -837,7 +936,7 @@
       "source_file": "frontend\\src\\pages\\shared\\LandingPage.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_shared_landingpage_jsx",
-      "community": 20,
+      "community": 21,
       "norm_label": "landingpage.jsx"
     },
     {
@@ -846,7 +945,7 @@
       "source_file": "frontend\\src\\pages\\shared\\LandingPage.jsx",
       "source_location": "L5",
       "id": "shared_landingpage_landingpage",
-      "community": 20,
+      "community": 21,
       "norm_label": "landingpage()"
     },
     {
@@ -855,7 +954,7 @@
       "source_file": "frontend\\src\\pages\\shared\\LoginPage.jsx",
       "source_location": "L1",
       "id": "frontend_src_pages_shared_loginpage_jsx",
-      "community": 21,
+      "community": 22,
       "norm_label": "loginpage.jsx"
     },
     {
@@ -864,8 +963,98 @@
       "source_file": "frontend\\src\\pages\\shared\\LoginPage.jsx",
       "source_location": "L7",
       "id": "shared_loginpage_loginpage",
-      "community": 21,
+      "community": 22,
       "norm_label": "loginpage()"
+    },
+    {
+      "label": "Called after a patient completes a camera session.     Persists the session sco",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L301",
+      "community": 27,
+      "norm_label": "called after a patient completes a camera session.     persists the session sco",
+      "id": "backend_main_rationale_301"
+    },
+    {
+      "label": "AI agent endpoint. Call this right after /session returns a session_id.     Fet",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L335",
+      "community": 28,
+      "norm_label": "ai agent endpoint. call this right after /session returns a session_id.     fet",
+      "id": "backend_main_rationale_335"
+    },
+    {
+      "label": "Returns aggregated session stats for a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L518",
+      "community": 29,
+      "norm_label": "returns aggregated session stats for a patient.",
+      "id": "backend_main_rationale_518"
+    },
+    {
+      "label": "Returns recent session analyses for a patient.     Used by DoctorPatientDetail",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L546",
+      "community": 30,
+      "norm_label": "returns recent session analyses for a patient.     used by doctorpatientdetail",
+      "id": "backend_main_rationale_546"
+    },
+    {
+      "label": "Doctor sends feedback message to a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L569",
+      "community": 31,
+      "norm_label": "doctor sends feedback message to a patient.",
+      "id": "backend_main_rationale_569"
+    },
+    {
+      "label": "Fetch all feedback messages for a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L591",
+      "community": 32,
+      "norm_label": "fetch all feedback messages for a patient.",
+      "id": "backend_main_rationale_591"
+    },
+    {
+      "label": "Called after a patient completes a camera session.     Persists the session sco",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L292",
+      "community": 33,
+      "norm_label": "called after a patient completes a camera session.     persists the session sco",
+      "id": "backend_main_rationale_292"
+    },
+    {
+      "label": "Returns aggregated session stats for a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L319",
+      "community": 34,
+      "norm_label": "returns aggregated session stats for a patient.",
+      "id": "backend_main_rationale_319"
+    },
+    {
+      "label": "Doctor sends feedback message to a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L347",
+      "community": 35,
+      "norm_label": "doctor sends feedback message to a patient.",
+      "id": "backend_main_rationale_347"
+    },
+    {
+      "label": "Fetch all feedback messages for a patient.",
+      "file_type": "rationale",
+      "source_file": "backend\\main.py",
+      "source_location": "L369",
+      "community": 36,
+      "norm_label": "fetch all feedback messages for a patient.",
+      "id": "backend_main_rationale_369"
     }
   ],
   "links": [
@@ -873,7 +1062,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L46",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_jointscore",
@@ -885,7 +1074,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L51",
+      "source_location": "L60",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_sessionresult",
@@ -897,7 +1086,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L59",
+      "source_location": "L68",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_feedbackpayload",
@@ -909,7 +1098,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L65",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "backend_main_py",
+      "_tgt": "backend_main_analyzerequest",
+      "source": "backend_main_py",
+      "target": "backend_main_analyzerequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L79",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_score_label",
@@ -921,7 +1122,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L105",
+      "source_location": "L118",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_angle_degrees",
@@ -933,7 +1134,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L118",
+      "source_location": "L131",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_midpoint",
@@ -945,7 +1146,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L122",
+      "source_location": "L135",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_score_for_angle",
@@ -957,7 +1158,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L132",
+      "source_location": "L146",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_health",
@@ -969,7 +1170,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L137",
+      "source_location": "L156",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_session_ws",
@@ -981,7 +1182,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L291",
+      "source_location": "L301",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_save_session",
@@ -993,7 +1194,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L318",
+      "source_location": "L335",
+      "weight": 1.0,
+      "_src": "backend_main_py",
+      "_tgt": "backend_main_analyze_session",
+      "source": "backend_main_py",
+      "target": "backend_main_analyze_session",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L518",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_get_patient_stats",
@@ -1005,7 +1218,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L346",
+      "source_location": "L546",
+      "weight": 1.0,
+      "_src": "backend_main_py",
+      "_tgt": "backend_main_get_patient_analysis",
+      "source": "backend_main_py",
+      "target": "backend_main_get_patient_analysis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L569",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_send_feedback",
@@ -1017,7 +1242,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L368",
+      "source_location": "L591",
       "weight": 1.0,
       "_src": "backend_main_py",
       "_tgt": "backend_main_get_feedback",
@@ -1029,7 +1254,7 @@
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L46",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "backend_main_jointscore",
       "_tgt": "basemodel",
@@ -1041,7 +1266,7 @@
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L51",
+      "source_location": "L60",
       "weight": 1.0,
       "_src": "backend_main_sessionresult",
       "_tgt": "basemodel",
@@ -1053,7 +1278,7 @@
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L59",
+      "source_location": "L68",
       "weight": 1.0,
       "_src": "backend_main_feedbackpayload",
       "_tgt": "basemodel",
@@ -1062,10 +1287,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "backend_main_analyzerequest",
+      "_tgt": "basemodel",
+      "source": "basemodel",
+      "target": "backend_main_analyzerequest",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L303",
+      "source_location": "L314",
       "weight": 1.0,
       "_src": "backend_main_save_session",
       "_tgt": "backend_main_score_label",
@@ -1077,7 +1314,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L231",
+      "source_location": "L241",
       "weight": 1.0,
       "_src": "backend_main_session_ws",
       "_tgt": "backend_main_angle_degrees",
@@ -1089,7 +1326,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L226",
+      "source_location": "L236",
       "weight": 1.0,
       "_src": "backend_main_session_ws",
       "_tgt": "backend_main_midpoint",
@@ -1101,7 +1338,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L246",
+      "source_location": "L256",
       "weight": 1.0,
       "_src": "backend_main_session_ws",
       "_tgt": "backend_main_score_for_angle",
@@ -1113,55 +1350,79 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L292",
+      "source_location": "L302",
       "weight": 1.0,
-      "_src": "backend_main_rationale_292",
+      "_src": "backend_main_rationale_302",
       "_tgt": "backend_main_save_session",
       "source": "backend_main_save_session",
-      "target": "backend_main_rationale_292",
+      "target": "backend_main_rationale_302",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L319",
+      "source_location": "L336",
       "weight": 1.0,
-      "_src": "backend_main_rationale_319",
+      "_src": "backend_main_rationale_336",
+      "_tgt": "backend_main_analyze_session",
+      "source": "backend_main_analyze_session",
+      "target": "backend_main_rationale_336",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L519",
+      "weight": 1.0,
+      "_src": "backend_main_rationale_519",
       "_tgt": "backend_main_get_patient_stats",
       "source": "backend_main_get_patient_stats",
-      "target": "backend_main_rationale_319",
+      "target": "backend_main_rationale_519",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L347",
+      "source_location": "L547",
       "weight": 1.0,
-      "_src": "backend_main_rationale_347",
+      "_src": "backend_main_rationale_547",
+      "_tgt": "backend_main_get_patient_analysis",
+      "source": "backend_main_get_patient_analysis",
+      "target": "backend_main_rationale_547",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\main.py",
+      "source_location": "L570",
+      "weight": 1.0,
+      "_src": "backend_main_rationale_570",
       "_tgt": "backend_main_send_feedback",
       "source": "backend_main_send_feedback",
-      "target": "backend_main_rationale_347",
+      "target": "backend_main_rationale_570",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "backend\\main.py",
-      "source_location": "L369",
+      "source_location": "L592",
       "weight": 1.0,
-      "_src": "backend_main_rationale_369",
+      "_src": "backend_main_rationale_592",
       "_tgt": "backend_main_get_feedback",
       "source": "backend_main_get_feedback",
-      "target": "backend_main_rationale_369",
+      "target": "backend_main_rationale_592",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_src": "frontend_src_app_jsx",
       "_tgt": "src_app_loadingscreen",
@@ -1173,7 +1434,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L54",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "frontend_src_app_jsx",
       "_tgt": "src_app_requireauth",
@@ -1185,7 +1446,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\App.jsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0,
       "_src": "frontend_src_app_jsx",
       "_tgt": "src_app_app",
@@ -1329,7 +1590,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
-      "source_location": "L38",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "frontend_src_components_patientbottomnav_jsx",
+      "_tgt": "components_patientbottomnav_chaticon",
+      "source": "frontend_src_components_patientbottomnav_jsx",
+      "target": "components_patientbottomnav_chaticon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\components\\PatientBottomNav.jsx",
+      "source_location": "L48",
       "weight": 1.0,
       "_src": "frontend_src_components_patientbottomnav_jsx",
       "_tgt": "components_patientbottomnav_patientbottomnav",
@@ -1533,7 +1806,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\pages\\doctor\\DoctorPatientDetail.jsx",
-      "source_location": "L379",
+      "source_location": "L580",
       "weight": 1.0,
       "_src": "frontend_src_pages_doctor_doctorpatientdetail_jsx",
       "_tgt": "doctor_doctorpatientdetail_btndestructivesmall",
@@ -1605,7 +1878,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\pages\\patient\\PatientCameraSession.jsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "frontend_src_pages_patient_patientcamerasession_jsx",
       "_tgt": "patient_patientcamerasession_patientcamerasession",
@@ -1676,6 +1949,66 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "_tgt": "patient_patienthealthchat_formattime",
+      "source": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "target": "patient_patienthealthchat_formattime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "_tgt": "patient_patienthealthchat_typingdots",
+      "source": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "target": "patient_patienthealthchat_typingdots",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "_tgt": "patient_patienthealthchat_messagebubble",
+      "source": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "target": "patient_patienthealthchat_messagebubble",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L129",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "_tgt": "patient_patienthealthchat_patienthealthchat",
+      "source": "frontend_src_pages_patient_patienthealthchat_jsx",
+      "target": "patient_patienthealthchat_patienthealthchat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\patient\\PatientHealthChat.jsx",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_src": "patient_patienthealthchat_messagebubble",
+      "_tgt": "patient_patienthealthchat_formattime",
+      "source": "patient_patienthealthchat_formattime",
+      "target": "patient_patienthealthchat_messagebubble",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\pages\\patient\\PatientProfile.jsx",
       "source_location": "L10",
       "weight": 1.0,
@@ -1737,7 +2070,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\pages\\patient\\PatientScoreScreen.jsx",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "_src": "frontend_src_pages_patient_patientscorescreen_jsx",
       "_tgt": "patient_patientscorescreen_animatednumber",
@@ -1749,7 +2082,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend\\src\\pages\\patient\\PatientScoreScreen.jsx",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "_src": "frontend_src_pages_patient_patientscorescreen_jsx",
       "_tgt": "patient_patientscorescreen_patientscorescreen",

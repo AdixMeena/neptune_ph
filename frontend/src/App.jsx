@@ -15,6 +15,7 @@ import PatientScoreScreen from './pages/patient/PatientScoreScreen.jsx'
 import PatientFeedback from './pages/patient/PatientFeedback.jsx'
 import PatientFindDoctor from './pages/patient/PatientFindDoctor.jsx'
 import PatientProfile from './pages/patient/PatientProfile.jsx'
+import PatientHealthChat from './pages/patient/PatientHealthChat.jsx'
 
 export const AuthContext = React.createContext(null)
 
@@ -164,6 +165,11 @@ export default function App() {
           <Route path="/patient/profile" element={
             <RequireAuth user={user} role={role} allowedRole="patient">
               <PatientProfile />
+            </RequireAuth>
+          } />
+          <Route path="/patient/chat" element={
+            <RequireAuth user={user} role={role} allowedRole="patient">
+              <PatientHealthChat />
             </RequireAuth>
           } />
 

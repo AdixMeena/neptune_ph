@@ -10,31 +10,47 @@ const POSE_CONNECTIONS = [
   [27, 29], [28, 30], [29, 31], [30, 32],
 ]
 
+// ── Voice helper ─────────────────────────────────────────────────────────────
+// Uses browser built-in Web Speech API — no API key, completely free
+function speak(text, { rate = 0.95, pitch = 1.0, volume = 1.0 } = {}) {
+  if (!window.speechSynthesis || !text) return
+  window.speechSynthesis.cancel()  // stop anything currently speaking
+  const utterance    = new SpeechSynthesisUtterance(text)
+  utterance.rate     = rate
+  utterance.pitch    = pitch
+  utterance.volume   = volume
+  utterance.lang     = 'en-US'
+  window.speechSynthesis.speak(utterance)
+}
+
 export default function PatientCameraSession() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id }     = useParams()
+  const navigate   = useNavigate()
 
-  const [exerciseName, setExerciseName]   = useState('Exercise')
-  const [feedback, setFeedback]           = useState('Initializing...')
-  const [landmarks, setLandmarks]         = useState([])
-  const [reps, setReps]                   = useState(0)
-  const [score, setScore]                 = useState(0)
-  const [timer, setTimer]                 = useState(0)
-  const [analyzing, setAnalyzing]         = useState(false)
-  const [analyzingMsg, setAnalyzingMsg]   = useState('')
+  const [exerciseName, setExerciseName] = useState('Exercise')
+  const [feedback,     setFeedback]     = useState('Initializing...')
+  const [landmarks,    setLandmarks]    = useState([])
+  const [reps,         setReps]         = useState(0)
+  const [score,        setScore]        = useState(0)
+  const [timer,        setTimer]        = useState(0)
+  const [analyzing,    setAnalyzing]    = useState(false)
+  const [analyzingMsg, setAnalyzingMsg] = useState('')
 
-  const videoRef       = useRef(null)
-  const overlayRef     = useRef(null)
-  const captureRef     = useRef(null)
-  const wsRef          = useRef(null)
-  const sendTimerRef   = useRef(null)
-  const sessionIdRef   = useRef(`${Date.now()}`)
-  const jointScoresRef = useRef({})   // latest frame joint scores, no re-render needed
-  const scoreRef       = useRef(0)    // mirror of score state for use in handleStop
-  const repsRef        = useRef(0)
-  const timerRef       = useRef(0)
+  const videoRef         = useRef(null)
+  const overlayRef       = useRef(null)
+  const captureRef       = useRef(null)
+  const wsRef            = useRef(null)
+  const sendTimerRef     = useRef(null)
+  const sessionIdRef     = useRef(`${Date.now()}`)
+  const jointScoresRef   = useRef({})
+  const scoreRef         = useRef(0)
+  const repsRef          = useRef(0)
+  const timerRef         = useRef(0)
+  const lastFeedbackRef  = useRef('')       // track last spoken feedback
+  const feedbackTimerRef = useRef(null)     // cooldown timer for voice feedback
+  const voiceIntroSaid   = useRef(false)    // only say intro once
 
-  // Keep refs in sync with state
+  // Keep refs in sync
   useEffect(() => { scoreRef.current = score }, [score])
   useEffect(() => { repsRef.current  = reps  }, [reps])
   useEffect(() => { timerRef.current = timer }, [timer])
@@ -78,27 +94,57 @@ export default function PatientCameraSession() {
     initCamera()
     return () => {
       isMounted = false
+      window.speechSynthesis?.cancel()
       const stream = videoRef.current?.srcObject
       if (stream?.getTracks) stream.getTracks().forEach(t => t.stop())
     }
   }, [])
 
-  // WebSocket
+  // WebSocket — receives landmarks, scores, feedback, and voice_intro from backend
   useEffect(() => {
     const wsBase = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
-    const ws = new WebSocket(`${wsBase}/ws/session/${sessionIdRef.current}?exercise_id=${id}`)
+    const ws     = new WebSocket(`${wsBase}/ws/session/${sessionIdRef.current}?exercise_id=${id}`)
     wsRef.current = ws
 
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data)
-        if (Array.isArray(data.landmarks))             setLandmarks(data.landmarks)
-        if (typeof data.session_score === 'number')    setScore(data.session_score)
-        if (data.rep_counted)                          setReps(r => r + 1)
-        if (data.feedback)                             setFeedback(data.feedback)
+
+        if (Array.isArray(data.landmarks))          setLandmarks(data.landmarks)
+        if (typeof data.session_score === 'number') setScore(data.session_score)
+        if (data.rep_counted) {
+          setReps(r => r + 1)
+          // Speak rep count encouragement
+          speak('Good rep', { rate: 1.1 })
+          return  // skip feedback cue on rep frames
+        }
         if (data.joint_scores && typeof data.joint_scores === 'object') {
           jointScoresRef.current = data.joint_scores
         }
+
+        // ── Voice intro — spoken exactly once when pose first detected ──────
+        if (data.voice_intro && !voiceIntroSaid.current) {
+          voiceIntroSaid.current = true
+          speak(data.voice_intro, { rate: 0.9 })
+          setFeedback(data.feedback || 'Get ready')
+          return
+        }
+
+        // ── Live feedback — spoken at most every 4 seconds, only if changed ─
+        if (data.feedback) {
+          setFeedback(data.feedback)
+          const isNew      = data.feedback !== lastFeedbackRef.current
+          const noTimer    = !feedbackTimerRef.current
+          if (isNew && noTimer) {
+            lastFeedbackRef.current = data.feedback
+            speak(data.feedback, { rate: 0.95 })
+            // cooldown: don't speak again for 4 seconds
+            feedbackTimerRef.current = setTimeout(() => {
+              feedbackTimerRef.current = null
+            }, 4000)
+          }
+        }
+
       } catch {
         setFeedback('Tracking error')
       }
@@ -106,15 +152,19 @@ export default function PatientCameraSession() {
 
     ws.onclose = () => setFeedback('Connection closed')
     ws.onerror = () => setFeedback('WebSocket error')
-    return () => ws.close()
+
+    return () => {
+      ws.close()
+      if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current)
+    }
   }, [id])
 
   // Frame capture loop
   useEffect(() => {
     const capture = () => {
-      const video = videoRef.current
+      const video  = videoRef.current
       const canvas = captureRef.current
-      const ws = wsRef.current
+      const ws     = wsRef.current
       if (!video || !canvas || !ws || ws.readyState !== WebSocket.OPEN) return
       if (video.videoWidth === 0 || video.videoHeight === 0) return
 
@@ -123,7 +173,7 @@ export default function PatientCameraSession() {
         canvas.height = video.videoHeight
       }
 
-      const ctx = canvas.getContext('2d')
+      const ctx  = canvas.getContext('2d')
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
       const base64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1]
       ws.send(JSON.stringify({ frame: base64 }))
@@ -170,33 +220,35 @@ export default function PatientCameraSession() {
 
   const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
 
-  // ── Stop handler — save + analyze ──────────────────────────────────────────
+  // ── Stop handler ────────────────────────────────────────────────────────────
   async function handleStop() {
-    if (wsRef.current)       wsRef.current.close()
+    if (wsRef.current)           wsRef.current.close()
     clearInterval(sendTimerRef.current)
+    if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current)
+    window.speechSynthesis?.cancel()
+    speak('Session complete. Analyzing your performance.')
     setAnalyzing(true)
 
     const finalScore    = scoreRef.current
     const finalReps     = repsRef.current
     const finalDuration = timerRef.current
 
-    // Convert joint scores object → array for backend
     const jointScoresArray = Object.entries(jointScoresRef.current).map(([name, sc]) => ({
       name,
-      score: typeof sc === 'number' ? sc : 0,
-      status: (typeof sc === 'number' && sc >= 70) ? 'good' : 'warning',
+      score:  typeof sc === 'number' ? sc : 0,
+      status: typeof sc === 'number' && sc >= 70 ? 'good' : 'warning',
     }))
 
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
-    // ── 1. Get current user ─────────────────────────────────────────────────
+    // Get patient id
     let patientId = 'unknown'
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (user?.id) patientId = user.id
     } catch { /* continue */ }
 
-    // ── 2. Save session ─────────────────────────────────────────────────────
+    // Save session
     setAnalyzingMsg('Saving session...')
     let sessionId = null
     try {
@@ -213,10 +265,10 @@ export default function PatientCameraSession() {
         }),
       })
       const saved = await res.json()
-      sessionId = saved.session_id || null
-    } catch { /* session save failed, continue */ }
+      sessionId   = saved.session_id || null
+    } catch { /* continue */ }
 
-    // ── 3. Run AI analysis ──────────────────────────────────────────────────
+    // Run AI analysis
     setAnalyzingMsg('Analyzing your performance...')
     let analysis = null
     if (sessionId) {
@@ -231,10 +283,9 @@ export default function PatientCameraSession() {
           }),
         })
         analysis = await res.json()
-      } catch { /* analysis failed, navigate anyway */ }
+      } catch { /* continue */ }
     }
 
-    // ── 4. Navigate to score screen with everything ─────────────────────────
     navigate('/patient/score', {
       state: {
         exerciseId:  id,
@@ -256,7 +307,6 @@ export default function PatientCameraSession() {
         alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Inter", sans-serif', gap: 24,
       }}>
-        {/* Spinner */}
         <div style={{
           width: 56, height: 56, borderRadius: '50%',
           border: '3px solid #272729',
@@ -355,7 +405,7 @@ export default function PatientCameraSession() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
             onMouseDown={e => e.currentTarget.style.transform = 'scale(0.93)'}
-            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+            onMouseUp={e =>   e.currentTarget.style.transform = 'scale(1)'}
           >
             <div style={{ width: 16, height: 16, background: '#fff', borderRadius: 3 }} />
           </button>
