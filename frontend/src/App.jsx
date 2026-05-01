@@ -16,6 +16,8 @@ import PatientFeedback from './pages/patient/PatientFeedback.jsx'
 import PatientFindDoctor from './pages/patient/PatientFindDoctor.jsx'
 import PatientProfile from './pages/patient/PatientProfile.jsx'
 import PatientHealthChat from './pages/patient/PatientHealthChat.jsx'
+import VantaBg from './components/VantaBg'
+
 
 export const AuthContext = React.createContext(null)
 
@@ -82,7 +84,9 @@ export default function App() {
   const role = user?.user_metadata?.role   // 'doctor' | 'patient'
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <div>
+      <VantaBg />
+      <AuthContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
           {/* Root → redirect if already logged in */}
@@ -176,6 +180,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
-    </AuthContext.Provider>
+      </AuthContext.Provider>
+    </div>
   )
 }
