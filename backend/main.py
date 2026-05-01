@@ -46,6 +46,7 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "https://neptune-ph.vercel.app",
     ],
+    allow_origin_regex="https://.*vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -243,18 +244,24 @@ async def session_ws(websocket: WebSocket, session_id: str):
     voice_cues    = target_config.get("voice_cues", {})
     voice_intro   = target_config.get("voice_intro", "")
 
-    mp_pose = mp.solutions.pose
-    pose    = mp_pose.Pose(
-        static_image_mode=False,
-        model_complexity=1,
-        enable_segmentation=False,
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5,
-    )
+    # MediaPipe initialization with complexity 0 (lighter for Railway)
+    try:
+        mp_pose = mp.solutions.pose
+        pose    = mp_pose.Pose(
+            static_image_mode=False,
+            model_complexity=0,
+            enable_segmentation=False,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5,
+        )
+    except Exception as e:
+        print(f"MediaPipe Init Error: {e}")
+        await websocket.close(code=1011)
+        return
 
     rep_phase         = 0
     rep_count         = 0
-    first_valid_frame = True   # used to trigger voice_intro once
+    first_valid_frame = True
 
     try:
         while True:
@@ -383,9 +390,14 @@ async def session_ws(websocket: WebSocket, session_id: str):
             }))
 
     except WebSocketDisconnect:
-        pass
+        print(f"WebSocket disconnected: {session_id}")
+    except Exception as e:
+        print(f"WebSocket Error: {e}")
     finally:
-        pose.close()
+        try:
+            pose.close()
+        except:
+            pass
 
 
 @app.post("/session")
