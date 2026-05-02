@@ -141,18 +141,22 @@ export default function PatientHealthChat() {
     async function getDoctor() {
       if (!user) return
       try {
-        const { data: pData } = await supabase
+        const { data: pRows } = await supabase
           .from('patients')
           .select('doctor_id')
           .eq('user_id', user.id)
-          .maybeSingle()
+          .limit(1)
+
+        const pData = pRows?.[0]
 
         if (pData?.doctor_id) {
-          const { data: dProf } = await supabase
+          const { data: dProfs } = await supabase
             .from('profiles')
             .select('name')
             .eq('id', pData.doctor_id)
-            .maybeSingle()
+            .limit(1)
+          
+          const dProf = dProfs?.[0]
           if (dProf?.name) setDoctorName(dProf.name)
         }
       } catch (e) {

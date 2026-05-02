@@ -93,11 +93,13 @@ export default function PatientProfile() {
       setError('')
       setLoading(true)
 
-      const { data: profileRow, error: profileError } = await supabase
+      const { data: profileRows, error: profileError } = await supabase
         .from('profiles')
         .select('id, name, created_at')
         .eq('id', user.id)
-        .maybeSingle()
+        .limit(1)
+
+      const profileRow = profileRows?.[0] || null
 
       if (profileError) {
         if (isMounted) {
@@ -107,13 +109,14 @@ export default function PatientProfile() {
         return
       }
 
-      const { data: patientRow, error: patientError } = await supabase
+      const { data: patientRows, error: patientError } = await supabase
         .from('patients')
         .select('id, name, condition, age, score, streak, progress')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(1)
-        .maybeSingle()
+
+      const patientRow = patientRows?.[0] || null
 
       if (patientError) {
         if (isMounted) {
@@ -123,20 +126,24 @@ export default function PatientProfile() {
         return
       }
 
-      const { data: connectionRow } = await supabase
+      const { data: connectionRows } = await supabase
         .from('connections')
         .select('doctor_id')
         .eq('patient_id', user.id)
         .eq('status', 'approved')
-        .maybeSingle()
+        .limit(1)
+
+      const connectionRow = connectionRows?.[0] || null
 
       let doctorProfileName = 'Not assigned'
       if (connectionRow?.doctor_id) {
-        const { data: doctorProfile } = await supabase
+        const { data: doctorProfiles } = await supabase
           .from('profiles')
           .select('name')
           .eq('id', connectionRow.doctor_id)
-          .maybeSingle()
+          .limit(1)
+
+        const doctorProfile = doctorProfiles?.[0] || null
 
         doctorProfileName = doctorProfile?.name || doctorProfileName
       }

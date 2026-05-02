@@ -231,8 +231,9 @@ export default function PatientCameraSession() {
 
     if (!landmarks.length) return
 
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)'
-    ctx.lineWidth   = 2
+    ctx.strokeStyle = '#0071e3'
+    ctx.lineWidth   = 3
+    ctx.lineCap     = 'round'
     POSE_CONNECTIONS.forEach(([a, b]) => {
       const p1 = landmarks[a]
       const p2 = landmarks[b]
@@ -246,8 +247,11 @@ export default function PatientCameraSession() {
     landmarks.forEach(point => {
       ctx.beginPath()
       ctx.fillStyle = '#34c759'
-      ctx.arc(point.x * width, point.y * height, 3, 0, Math.PI * 2)
+      ctx.arc(point.x * width, point.y * height, 4, 0, Math.PI * 2)
       ctx.fill()
+      ctx.strokeStyle = '#fff'
+      ctx.lineWidth = 1
+      ctx.stroke()
     })
   }, [landmarks])
 
@@ -386,7 +390,15 @@ export default function PatientCameraSession() {
         />
         <canvas
           ref={overlayRef}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover',
+            zIndex: 5,
+            pointerEvents: 'none'
+          }}
         />
         <canvas ref={captureRef} style={{ display: 'none' }} />
 

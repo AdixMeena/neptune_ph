@@ -1,0 +1,14 @@
+opencv-python
+joblib
+mediapipe
+numpy
+pandas
+scipy
+scikit-learn
+tensorflow
+websockets
+fastapi
+uvicorn
+edge_tts
+googletrans==3.1.0a0
+tempfile

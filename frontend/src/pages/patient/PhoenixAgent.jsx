@@ -312,7 +312,7 @@ export default function PhoenixAgent() {
 
       const [exResult, patResult] = await Promise.all([
         supabase.from('exercises').select('*').order('name'),
-        supabase.from('patients').select('id').eq('user_id', user.id).maybeSingle(),
+        supabase.from('patients').select('id').eq('user_id', user.id).limit(1),
       ])
 
       if (!mounted) return
@@ -320,7 +320,7 @@ export default function PhoenixAgent() {
       if (exResult.error) { setError(exResult.error.message); setLoading(false); return }
       if (patResult.error) { setError(patResult.error.message); setLoading(false); return }
 
-      const pid = patResult.data?.id
+      const pid = patResult.data?.[0]?.id
       setAllExercises(exResult.data || [])
       setPatientId(pid)
 
